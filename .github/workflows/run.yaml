@@ -1,0 +1,23 @@
+name: run
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 2
+    strategy:
+      matrix:
+        node-version: [16]
+
+    steps:
+      - name: Checkout ${{ github.sha }}
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run
+        run: node index.mjs
